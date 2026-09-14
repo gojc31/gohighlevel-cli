@@ -1,0 +1,23 @@
+#!/bin/bash
+# GHL CLI wrapper — auto-activates venv and loads .env
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+
+if [ -f "$SCRIPT_DIR/.venv/bin/activate" ]; then
+    # POSIX venv layout (Linux/macOS, WSL)
+    source "$SCRIPT_DIR/.venv/bin/activate"
+elif [ -f "$SCRIPT_DIR/.venv/Scripts/activate" ]; then
+    # Windows venv layout (python -m venv under Git Bash)
+    source "$SCRIPT_DIR/.venv/Scripts/activate"
+else
+    echo "Error: no virtualenv found at $SCRIPT_DIR/.venv" >&2
+    echo "Run ./install.sh first." >&2
+    exit 1
+fi
+
+# Load .env if it exists (export all vars)
+if [ -f "$SCRIPT_DIR/.env" ]; then
+    set -a
+    source "$SCRIPT_DIR/.env"
+    set +a
+fi
+exec cli-anything-gohighlevel "$@"

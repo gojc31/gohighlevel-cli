@@ -1,0 +1,14 @@
+Originally built by Lead Gen Jay (https://leadgenjay.com).
+Adapted and generalized fork copyright (c) 2026 JC (github.com/gojc31).
+
+This fork is published for public use. You may use, copy, modify and
+distribute it, provided this notice and the credit to the original author
+are retained.
+
+Provided "as is", without warranty of any kind, express or implied. Neither
+the original author nor the maintainer of this fork is liable for any claim,
+damages, or other liability arising from the use of this software.
+
+This tool calls undocumented GoHighLevel internal endpoints. Use of those
+endpoints is at your own risk and may violate GoHighLevel's terms of service;
+you are responsible for your own compliance.

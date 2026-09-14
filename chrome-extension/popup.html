@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      width: 320px;
+      padding: 16px;
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 13px;
+      color: #1a1a1a;
+    }
+    h2 {
+      margin: 0 0 12px;
+      font-size: 15px;
+      color: #0d0d0d;
+    }
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 8px;
+      border: none;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+    .btn:hover { opacity: 0.85; }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .btn-primary {
+      background: #ED0D51;
+      color: white;
+    }
+    .btn-secondary {
+      background: #f0f0f0;
+      color: #333;
+    }
+    #status {
+      margin-top: 8px;
+      padding: 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      display: none;
+    }
+    .success { background: #e8f5e9; color: #2e7d32; display: block !important; }
+    .error { background: #fce4ec; color: #c62828; display: block !important; }
+    .info { background: #e3f2fd; color: #1565c0; display: block !important; }
+    .token-preview {
+      margin-top: 8px;
+      padding: 6px 8px;
+      background: #f5f5f5;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 11px;
+      word-break: break-all;
+      max-height: 60px;
+      overflow-y: auto;
+      display: none;
+    }
+    small { color: #888; }
+  </style>
+</head>
+<body>
+  <h2>GHL Token Grabber</h2>
+  <button id="grabBtn" class="btn btn-primary">Grab Refresh Token</button>
+  <button id="copyBtn" class="btn btn-secondary" disabled>Copy to Clipboard</button>
+  <div id="status"></div>
+  <div id="preview" class="token-preview"></div>
+  <small>Open on any GHL page (app.gohighlevel.com)</small>
+  <script src="popup.js"></script>
+</body>
+</html>
