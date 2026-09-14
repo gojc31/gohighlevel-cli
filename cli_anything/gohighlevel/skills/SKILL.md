@@ -19,6 +19,10 @@ CLI interface for the GoHighLevel (GHL) CRM and Marketing API. Manage contacts, 
 - `GHL_API_KEY` environment variable set with your GHL API bearer token
 - `GHL_LOCATION_ID` environment variable (required - the long ID in your GHL URL)
 
+Both can be exported in the shell or put in a `.env` file at the project root - the CLI
+loads that `.env` itself at startup (no wrapper script parses it). An exported shell
+variable takes precedence over the file; `GHL_ENV_FILE` points at a different file.
+
 ## Installation
 
 ```bash

@@ -7,6 +7,7 @@ import sys
 import click
 import requests
 
+from cli_anything._env import load_dotenv
 from cli_anything.gohighlevel.utils import ghl_client as api
 
 
@@ -1254,6 +1255,7 @@ def locations_custom_values(ctx):
 # ===========================================================================
 
 def main():
+    load_dotenv()
     cli(obj={})
 
 

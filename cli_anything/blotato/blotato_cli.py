@@ -7,6 +7,7 @@ import sys
 import click
 import requests
 
+from cli_anything._env import load_dotenv
 from cli_anything.blotato.utils import blotato_client as api
 
 
@@ -240,6 +241,7 @@ def posts_status(ctx, submission_id):
 # ---------------------------------------------------------------------------
 
 def main():
+    load_dotenv()
     cli()
 
 

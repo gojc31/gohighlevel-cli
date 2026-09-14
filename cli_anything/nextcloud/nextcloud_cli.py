@@ -7,6 +7,7 @@ import sys
 import click
 import requests
 
+from cli_anything._env import load_dotenv
 from cli_anything.nextcloud.utils import nc_client as api
 
 
@@ -50,6 +51,7 @@ def _handle_error(e: Exception):
 @click.pass_context
 def main(ctx, as_json):
     """Nextcloud CLI — manage files and shares on Nextcloud."""
+    load_dotenv()
     ctx.ensure_object(dict)
     ctx.obj["json"] = as_json
     if ctx.invoked_subcommand is None:

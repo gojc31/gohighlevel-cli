@@ -5,7 +5,7 @@ setup(
     version="1.1.0",
     description="Command-line interface for the GoHighLevel API",
     author="Lead Gen Jay (original); JC fork",
-    packages=find_namespace_packages(include=["cli_anything.*"]),
+    packages=find_namespace_packages(include=["cli_anything", "cli_anything.*"]),
     package_data={
         "cli_anything.gohighlevel": ["skills/*.md"],
         "cli_anything.nextcloud": ["skills/*.md"],

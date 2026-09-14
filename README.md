@@ -30,6 +30,11 @@ cd gohighlevel-cli
 
 The installer creates a `.venv/`, installs the package, and copies `.env.example` → `.env`.
 
+The CLI itself reads `.env` — the wrappers (`ghl`, `ghl.cmd`) just launch Python, and
+`cli_anything/_env.py` loads `.env` from the project root at startup (standard library only,
+no `python-dotenv`). Variables already exported in your shell win over the file; set
+`GHL_ENV_FILE=/path/to/file` to read a different file.
+
 Open `.env` and fill in:
 
 ```env

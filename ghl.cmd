@@ -1,19 +1,15 @@
 @echo off
-REM GHL CLI wrapper for Windows - activates venv and loads .env
+REM GHL CLI wrapper for Windows - runs the CLI from the local venv.
+REM .env loading lives in Python (cli_anything/_env.py), not here.
 setlocal disabledelayedexpansion
 set "SCRIPT_DIR=%~dp0"
 
-if exist "%SCRIPT_DIR%.env" (
-  for /f "usebackq eol=# tokens=1,* delims==" %%A in ("%SCRIPT_DIR%.env") do call :setenvvar "%%A" %%B
+set "PY=%SCRIPT_DIR%.venv\Scripts\python.exe"
+if not exist "%PY%" set "PY=%SCRIPT_DIR%.venv\bin\python.exe"
+if not exist "%PY%" (
+  echo No virtualenv found. Run install.sh first. 1>&2
+  exit /b 1
 )
 
-"%SCRIPT_DIR%.venv\Scripts\python.exe" -m cli_anything.gohighlevel %*
+"%PY%" -m cli_anything.gohighlevel %*
 exit /b %ERRORLEVEL%
-
-:setenvvar
-set "_key=%~1"
-if "%_key%"=="" goto :eof
-set "_val=%~2"
-if "%_val:~0,1%"=="'" if "%_val:~-1%"=="'" set "_val=%_val:~1,-1%"
-set "%_key%=%_val%"
-goto :eof
