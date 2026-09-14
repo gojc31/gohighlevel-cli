@@ -6,9 +6,15 @@ Standard library only - no python-dotenv dependency. The wrappers (``ghl``,
 from __future__ import annotations
 
 import os
+import re
 from pathlib import Path
 
 __all__ = ["load_dotenv"]
+
+_LINE_SPLIT_RE = re.compile(r"\r\n|\r|\n")
+
+# An inline comment starts at a '#' preceded by at least one space or tab.
+_INLINE_COMMENT_RE = re.compile(r"[ \t]#")
 
 
 def _default_env_path() -> Path:
@@ -40,15 +46,14 @@ def load_dotenv(path: str | os.PathLike | None = None, *, override: bool = False
     Returns the number of variables set. Missing file is not an error
     (returns 0). Never raises on a malformed line and never prints.
     """
-    env_path = Path(path) if path is not None else _default_env_path()
-
     try:
+        env_path = Path(path) if path is not None else _default_env_path()
         raw = env_path.read_text(encoding="utf-8", errors="replace")
     except (OSError, ValueError):
         return 0
 
     count = 0
-    for index, line in enumerate(raw.splitlines()):
+    for index, line in enumerate(_LINE_SPLIT_RE.split(raw)):
         if index == 0:
             line = line.lstrip("﻿")
 
@@ -69,7 +74,17 @@ def load_dotenv(path: str | os.PathLike | None = None, *, override: bool = False
 
         value = value.strip()
         if len(value) >= 2 and value[0] == value[-1] and value[0] in ("'", '"'):
+            # Quoted value: everything inside the matching quotes is
+            # literal. Anything after the closing quote is ignored.
             value = value[1:-1]
+        else:
+            # Unquoted value: an inline comment starts at the first '#'
+            # preceded by whitespace. A '#' glued to the value is part
+            # of it (e.g. abc#def, or a value that is entirely #foo).
+            match = _INLINE_COMMENT_RE.search(value)
+            if match is not None:
+                value = value[: match.start()]
+            value = value.rstrip()
 
         if not override and key in os.environ:
             continue

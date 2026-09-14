@@ -35,7 +35,7 @@ The CLI itself reads `.env` — the wrappers (`ghl`, `ghl.cmd`) just launch Pyth
 no `python-dotenv`). Variables already exported in your shell win over the file; set
 `GHL_ENV_FILE=/path/to/file` to read a different file.
 
-Open `.env` and fill in:
+Open `.env` and fill in. An inline `#` comment (preceded by a space or tab, as below) is stripped from the value; quote a value if it needs a literal ` #`.
 
 ```env
 GHL_API_KEY=pit-xxxxxxxx-...        # GHL Settings → Private Integrations

@@ -49,9 +49,8 @@ def _handle_error(e: Exception):
 @click.group(invoke_without_command=True)
 @click.option("--json", "as_json", is_flag=True, help="Output as JSON")
 @click.pass_context
-def main(ctx, as_json):
+def cli(ctx, as_json):
     """Nextcloud CLI — manage files and shares on Nextcloud."""
-    load_dotenv()
     ctx.ensure_object(dict)
     ctx.obj["json"] = as_json
     if ctx.invoked_subcommand is None:
@@ -62,7 +61,7 @@ def main(ctx, as_json):
 # Shares Group
 # ---------------------------------------------------------------------------
 
-@main.group()
+@cli.group()
 @click.pass_context
 def shares(ctx):
     """Manage public share links."""
@@ -136,7 +135,7 @@ def shares_delete(ctx, share_id):
 # Files Group
 # ---------------------------------------------------------------------------
 
-@main.group()
+@cli.group()
 @click.pass_context
 def files(ctx):
     """Browse files and folders via WebDAV."""
@@ -172,6 +171,15 @@ def files_info(ctx, path):
         _output(ctx, info, f"Info: {path}")
     except Exception as e:
         _handle_error(e)
+
+
+# ---------------------------------------------------------------------------
+# Entry point
+# ---------------------------------------------------------------------------
+
+def main():
+    load_dotenv()
+    cli()
 
 
 if __name__ == "__main__":
